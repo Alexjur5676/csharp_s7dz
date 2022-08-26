@@ -6,20 +6,20 @@
 // 8 4 2 4
 // Среднее арифметическое каждого столбца: 4,6; 5,6; 3,6; 3
 
-int[,] FillMatrix(int rowsCount, int columsCount, int leftRange = -10, int rightRange = 10)
+double[,] FillMatrix(int rowsCount, int columsCount, double leftRange = -10, double rightRange = 10)
 {
-    int[,] matrix = new int[rowsCount, columsCount];
+    double[,] matrix = new double[rowsCount, columsCount];
     Random rand = new Random();
     for (int i = 0; i < matrix.GetLength(0); i++)
     {
         for (int j = 0; j < matrix.GetLength(1); j++)
         {
-            matrix[i, j] = rand.Next();
+            matrix[i, j] = Math.Round(rand.NextDouble()*(10.0 + 10.0) - 10,0);
         }
     }
     return matrix;
 }
-void PrintMatrix(int[,] matrix)
+void PrintMatrix(double[,] matrix)
 {
     for (int i = 0; i < matrix.GetLength(0); i++)
     {
@@ -33,17 +33,17 @@ void PrintMatrix(int[,] matrix)
 Console.Write("Введите n и m через Enter ");
 int m = Convert.ToInt32(Console.ReadLine());
 int n = Convert.ToInt32(Console.ReadLine());
-int[,] matrix = FillMatrix(m, n);
+double[,] matrix = FillMatrix(m, n);
 PrintMatrix(matrix);
-
-int sum = 0;
-for (int i = 0; i < matrix.GetLength(0); i++)
+double[] means = new double[n];
+double sum = 0;
+for (int j = 0; j < matrix.GetLength(1); j++)
 {
-    for (int j = 0; j < matrix.GetLength(1); j++)
+    for (int i = 0; i < matrix.GetLength(0); i++)
     {
-        sum=j+1;
+        sum = sum + matrix[i, j];
     }
-    Console.WriteLine(sum);
+    means[j] =Math.Round( sum / m,3);
 }
-int res = sum/m;
-Console.WriteLine(res);
+Console.WriteLine("Средние арифметические элементов столбцов ");
+Console.WriteLine(string.Join(", ", means));

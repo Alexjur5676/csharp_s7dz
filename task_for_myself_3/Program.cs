@@ -1,4 +1,4 @@
-﻿// Задайте двумерный массив из целых чисел. Найдите среднее арифметическое элементов в каждом столбце.
+﻿// Задайте двумерный массив из целых чисел. Выведите суммы элементов каждого столбца в заданную с консоли степень.
 
 // Например, задан массив:
 // 1 4 7 2
@@ -19,16 +19,17 @@ int[,] FillMatrix(int rowsCount, int columsCount, int leftRange = -10, int right
     }
     return matrix;
 }
+
 void PrintMatrix(int[,] matrix)
 {
     for (int i = 0; i < matrix.GetLength(0); i++)
+    {
+        for (int j = 0; j < matrix.GetLength(1); j++)
         {
-            for (int j = 0; j < matrix.GetLength(1); j++)
-            {
-                Console.Write(matrix[i,j] + " ");
-            }
-            Console.WriteLine();
+            Console.Write(matrix[i, j] + " ");
         }
+        Console.WriteLine();
+    }
 }
 Console.Write("Введите n и m через Enter ");
 int m = Convert.ToInt32(Console.ReadLine());
@@ -36,16 +37,17 @@ int n = Convert.ToInt32(Console.ReadLine());
 int[,] matrix = FillMatrix(m, n);
 PrintMatrix(matrix);
 
+Console.Write("Введите степень числа ");
+int x = Convert.ToInt32(Console.ReadLine());
 double[] means = new double[n];
 for (int j = 0; j < matrix.GetLength(1); j++)
 {
-    double sum = 0;
+    int sum = 0;
     for (int i = 0; i < matrix.GetLength(0); i++)
     {
         sum = sum + matrix[i, j];
     }
-    means[j] = Math.Round( sum / m,3);
+    means[j] = Math.Pow(sum,x);
 }
-
-Console.WriteLine("Средние арифметические элементов столбцов ");
+Console.WriteLine($"Суммы элементов столбцов в степени {x} ");
 Console.WriteLine(string.Join(", ", means));
